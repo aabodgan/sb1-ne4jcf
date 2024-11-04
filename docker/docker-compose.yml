@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../api/uploads:/app/uploads
+    environment:
+      - FLASK_ENV=production
+      - MAX_CONTENT_LENGTH=16777216
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
